@@ -2,6 +2,9 @@
 
 # Path to the .env file
 ENV_FILE="./.env"
+set -o allexport
+source "$ENV_FILE"
+set +o allexport
 
 # Check if the .env file exists
 if [ ! -f "$ENV_FILE" ]; then
