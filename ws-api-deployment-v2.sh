@@ -131,7 +131,7 @@ docker run -d \
 # -----------------------------------------------------------------------------
 
 echo "--- Building and deploying ws-api ---"
-docker build -t ws-api -f ./whatsapp-api/app/Dockerfile ./whatsapp-api/app
+docker build -t ws-api -f ./whatsapp-api/Dockerfile ./whatsapp-api
 
 remove_container_if_exists ws-api
 docker run -d \
@@ -144,6 +144,7 @@ docker run -d \
   --env TZ="$TZ" \
   --env PORT=80 \
   --env WHATSAPP_VERSION="$WS_VERSION" \
+  --env VALID_ORIGIN="$VIRTUAL_HOST_SITE"
   --expose 80 \
   -v ws-db-api:/app/persist \
   --network bridge \
