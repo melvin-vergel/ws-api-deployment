@@ -13,7 +13,7 @@ fi
 export $(grep -v '^#' "$ENV_FILE" | xargs)
 
 # Ensure required environment variables are set
-if [ -z "$DEFAULT_EMAIL" ] || [ -z "$GITHUB_TOKEN" ] || \
+if [ -z "$DEFAULT_EMAIL" ] || [ -z "$GITHUB_USER" ] || [ -z "$GITHUB_TOKEN" ] || \
    [ -z "$REPO_URL_API" ] || [ -z "$REPO_BRANCH_API" ] || [ -z "$VIRTUAL_HOST_API" ] || [ -z "$LETSENCRYPT_HOST_API" ] || \
    [ -z "$REPO_URL_SITE" ] || [ -z "$REPO_BRANCH_SITE" ] || [ -z "$VIRTUAL_HOST_SITE" ] || [ -z "$LETSENCRYPT_HOST_SITE" ] || \
    [ -z "$TOKEN" ] || [ -z "$WS_VERSION" ] || [ -z "$TZ" ] || [ -z "$API_URL" ] || [ -z "$APPLY_EXCEL_LINK" ]; then
@@ -48,19 +48,20 @@ manage_repo() {
   local repo_url=$1
   local repo_dir=$2
   local repo_branch=$3
-  local authenticated_repo_url=$(echo "$repo_url" | sed "s|://|://$GITHUB_TOKEN@|")
+  # Injects both username and token for authentication
+  local authenticated_repo_url=$(echo "$repo_url" | sed "s|://|://$GITHUB_USER:$GITHUB_TOKEN@|")
 
   echo "--- Managing repository: $repo_dir ---"
   if [ -d "$repo_dir" ]; then
     echo "Directory found. Pulling latest changes from branch '$repo_branch'..."
     (cd "$repo_dir" && git reset --hard && git clean -fd && git pull "$authenticated_repo_url" "$repo_branch") || {
-      echo "Error: Failed to pull repository $repo_dir. Check connection and branch name."
+      echo "Error: Failed to pull repository $repo_dir. Check connection, credentials, and branch name."
       exit 1
     }
   else
     echo "Cloning repository from branch '$repo_branch'..."
     git clone -b "$repo_branch" "$authenticated_repo_url" "$repo_dir" || {
-      echo "Error: Failed to clone repository. Check URL and token."
+      echo "Error: Failed to clone repository. Check URL, credentials, and branch name."
       exit 1
     }
   fi
