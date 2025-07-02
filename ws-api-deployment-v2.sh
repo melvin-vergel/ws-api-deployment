@@ -144,7 +144,7 @@ docker run -d \
   --env TZ="$TZ" \
   --env PORT=80 \
   --env WHATSAPP_VERSION="$WS_VERSION" \
-  --env VALID_ORIGIN="$VIRTUAL_HOST_SITE" \
+  --env VALID_ORIGIN="https://$VIRTUAL_HOST_SITE" \
   --expose 80 \
   -v ws-db-api:/app/persist \
   --network bridge \
