@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Path to the .env file
 ENV_FILE="./.env"
