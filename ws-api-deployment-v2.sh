@@ -13,9 +13,6 @@ set -o allexport
 source "$ENV_FILE"
 set +o allexport
 
-# Load environment variables from the .env file
-export $(grep -v '^#' "$ENV_FILE" | xargs)
-
 # Ensure required environment variables are set
 if [ -z "$DEFAULT_EMAIL" ] || [ -z "$GITHUB_USER" ] || [ -z "$GITHUB_TOKEN" ] || \
    [ -z "$REPO_URL_API" ] || [ -z "$REPO_BRANCH_API" ] || [ -z "$VIRTUAL_HOST_API" ] || [ -z "$LETSENCRYPT_HOST_API" ] || \
