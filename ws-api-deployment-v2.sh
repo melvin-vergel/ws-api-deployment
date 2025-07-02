@@ -145,6 +145,9 @@ docker run -d \
   --env PORT=80 \
   --env WHATSAPP_VERSION="$WS_VERSION" \
   --env VALID_ORIGIN="https://$VIRTUAL_HOST_SITE" \
+  --env CRON_MORNING="$CRON_MORNING" \
+  --env CRON_DAY="$CRON_DAY" \
+  --env CRON_EVENING="$CRON_EVENING" \
   --expose 80 \
   -v ws-db-api:/app/persist \
   --network bridge \
