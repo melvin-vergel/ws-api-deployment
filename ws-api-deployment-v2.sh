@@ -112,8 +112,10 @@ remove_container_if_exists nginx-proxy
 docker run -d \
   --name nginx-proxy --restart unless-stopped \
   -p 80:80 -p 443:443 \
-  -v html:/usr/share/nginx/html -v certs:/etc/nginx/certs:ro \
+  -v html:/usr/share/nginx/html \
+  -v certs:/etc/nginx/certs:ro \
   -v /var/run/docker.sock:/tmp/docker.sock:ro \
+  -v ./my_custom_proxy_settings.conf:/etc/nginx/conf.d/my_custom_proxy_settings.conf:ro \
   --network bridge \
   nginxproxy/nginx-proxy
 
