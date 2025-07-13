@@ -115,7 +115,6 @@ docker run -d \
   -v html:/usr/share/nginx/html \
   -v certs:/etc/nginx/certs:ro \
   -v /var/run/docker.sock:/tmp/docker.sock:ro \
-  -v ./my_custom_proxy_settings.conf:/etc/nginx/conf.d/my_custom_proxy_settings.conf:ro \
   --network bridge \
   nginxproxy/nginx-proxy
 
@@ -151,6 +150,7 @@ docker run -d \
   --env CRON_MORNING="$CRON_MORNING" \
   --env CRON_DAY="$CRON_DAY" \
   --env CRON_EVENING="$CRON_EVENING" \
+  --env CLIENT_MAX_BODY_SIZE: "50m" \
   --expose 80 \
   -v ws-db-api:/app/persist \
   --network bridge \
