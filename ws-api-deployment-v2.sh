@@ -150,7 +150,7 @@ docker run -d \
   --env CRON_MORNING="$CRON_MORNING" \
   --env CRON_DAY="$CRON_DAY" \
   --env CRON_EVENING="$CRON_EVENING" \
-  --env CLIENT_MAX_BODY_SIZE: "50m" \
+  --env CLIENT_MAX_BODY_SIZE="50m" \
   --expose 80 \
   -v ws-db-api:/app/persist \
   --network bridge \
