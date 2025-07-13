@@ -115,6 +115,7 @@ docker run -d \
   -v html:/usr/share/nginx/html \
   -v certs:/etc/nginx/certs:ro \
   -v /var/run/docker.sock:/tmp/docker.sock:ro \
+   -v ./custom_proxy.conf:/etc/nginx/conf.d/custom_proxy.conf:rw \
   --network bridge \
   nginxproxy/nginx-proxy
 
