@@ -191,6 +191,19 @@ docker run -d \
   -v /:/host \
   portainer/agent:2.27.3
 
+echo "Adding sqlite-web (coleifer/sqlite-web)"
+remove_container_if_exists sqlite_web
+docker run -d \
+  --name sqlite_web --restart unless-stopped \
+  --env VIRTUAL_HOST="$VIRTUAL_HOST_SQL" \
+  --env LETSENCRYPT_HOST="$VIRTUAL_HOST_SQL" \
+  --env PASSWORD="$SQL_PASSWORD" \
+  --env TZ="$TZ" \
+  --expose 8080 \
+  -v ws-db-api:/data \
+  --network bridge \
+  coleifer/sqlite-web /data/database.sqllite --password "$SQL_PASSWORD" --host 0.0.0.0 --port 8080
+
 # -----------------------------------------------------------------------------
 # FINAL NOTIFICATION
 # -----------------------------------------------------------------------------
