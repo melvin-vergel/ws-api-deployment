@@ -198,7 +198,7 @@ docker run -d \
   --restart unless-stopped \
   -e VIRTUAL_HOST="$VIRTUAL_HOST_SQL" \
   -e LETSENCRYPT_HOST="$VIRTUAL_HOST_SQL" \
-  -e PASSWORD="$SQL_PASSWORD" \
+  -e SQLITE_WEB_PASSWORD="$SQL_PASSWORD" \
   -e TZ="$TZ" \
   -e SQLITE_DATABASE="database.sqllite" \
   -v ws-db-api:/data \
