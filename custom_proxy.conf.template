@@ -19,7 +19,9 @@ server {
     ssl_certificate_key /etc/nginx/certs/REPLACE_VIRTUAL_HOST_SQL.key;
     
     # Include standard SSL parameters provided by nginx-proxy
-    include /etc/nginx/conf.d/options-ssl-nginx.conf;
+    # Manually ensure some basic SSL security settings are present
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
 
     # Basic Auth directives placed inside a valid location block
     location / {
