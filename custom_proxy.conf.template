@@ -2,27 +2,27 @@ client_max_body_size 50M;
 
 # --- Authentication Configuration for SQLite Web ---
 
-# Use a map variable to match the host dynamically.
-# This ensures auth_basic and auth_basic_user_file are only applied 
-# to the specific host, and not globally.
+# Map to dynamically enable authentication for the specific SQL host
 map $host $auth_enabled {
     default 'off';
-    # REPLACE_VIRTUAL_HOST_SQL will be replaced by the script
     "REPLACE_VIRTUAL_HOST_SQL" 'on'; 
 }
 
-# This server block targets the specific SQL host and applies the authentication 
-# when the host variable is matched.
+# This server block targets the specific SQL host and applies the authentication
 server {
     listen 80;
     listen 443 ssl;
     server_name REPLACE_VIRTUAL_HOST_SQL;
 
-    # Basic Auth settings (only applied if $auth_enabled is 'on')
+    # Apply Basic Auth directives inside a location block if auth is enabled
+    # The directives `auth_basic` and `auth_basic_user_file` are only allowed 
+    # within http, server, or location blocks.
     if ($auth_enabled = 'on') {
-        # Realm text shown to the user in the login prompt
-        auth_basic "Restricted Access to SQLite Web"; 
-        # Path to the .htpasswd file inside the container
-        auth_basic_user_file /etc/nginx/htpasswd/.htpasswd; 
+        location / {
+            # Realm text shown to the user in the login prompt
+            auth_basic "Restricted Access to SQLite Web"; 
+            # Path to the .htpasswd file inside the container
+            auth_basic_user_file /etc/nginx/htpasswd/.htpasswd; 
+        }
     }
 }
