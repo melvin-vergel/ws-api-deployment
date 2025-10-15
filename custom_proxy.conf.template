@@ -13,6 +13,14 @@ server {
     listen 443 ssl;
     server_name REPLACE_VIRTUAL_HOST_SQL;
 
+    # --- SSL CONFIGURATION (REQUIRED for listen 443 ssl) ---
+    # Nginx requires these paths when 'ssl' is present on the listen directive.
+    ssl_certificate /etc/nginx/certs/REPLACE_VIRTUAL_HOST_SQL.crt;
+    ssl_certificate_key /etc/nginx/certs/REPLACE_VIRTUAL_HOST_SQL.key;
+    
+    # Include standard SSL parameters provided by nginx-proxy
+    include /etc/nginx/conf.d/options-ssl-nginx.conf;
+
     # Basic Auth directives placed inside a valid location block
     location / {
         # Realm text shown to the user in the login prompt
