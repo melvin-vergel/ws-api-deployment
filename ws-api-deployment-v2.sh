@@ -206,7 +206,7 @@ docker run -d \
   -e SQLITE_DATABASE="database.sqllite" \
   -v ws-db-api:/data \
   --network bridge \
-  coleifer/sqlite-web
+  ghcr.io/coleifer/sqlite-web:latest
 # -----------------------------------------------------------------------------
 # FINAL NOTIFICATION
 # -----------------------------------------------------------------------------
