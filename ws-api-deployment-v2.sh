@@ -88,10 +88,13 @@ create_volume_if_missing() {
 
 # Function to stop and remove a Docker container if it exists
 remove_container_if_exists() {
-  if [ "$(docker ps -q -f name=$1)" ]; then
+  # Look for any container (running or stopped) that matches the name filter
+  local container_id
+  container_id=$(docker ps -aq -f name="$1")
+  if [ -n "$container_id" ]; then
     echo "Stopping and removing existing container: $1"
-    docker stop "$1"
-    docker rm "$1"
+    # Use rm -f to stop (if running) and remove in one command; ignore failures
+    docker rm -f "$1" >/dev/null 2>&1 || true
   fi
 }
 
